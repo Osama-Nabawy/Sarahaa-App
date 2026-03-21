@@ -1,0 +1,45 @@
+import { model, Schema } from "mongoose";
+import { SYS_Gender } from "../../../common/index.js";
+
+const schema = new Schema(
+  {
+    username: {
+      type: String,
+      required: true,
+      minlength: 3,
+      maxlength: 20,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: function () {
+        if (this.phoneNumber) return false;
+        return true;
+      },
+      trim: true,
+      lowercase: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      minlength: 8,
+    },
+    phonenumber: {
+      type: String,
+      required: function () {
+        if (this.email) return false;
+        return true;
+      },
+    },
+    gender: {
+      type: Number,
+      enum: Object.values(SYS_Gender),
+      default: SYS_Gender.male,
+    },
+  },
+  {
+    timestamps: true,
+  },
+);
+export const User = new model("User",schema)
