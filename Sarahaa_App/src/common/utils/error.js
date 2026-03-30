@@ -1,19 +1,22 @@
-class ConflictDataException extends Error{
+export class ConflictDataException extends Error{
     constructor(massge) {
         super(massge , {cause : 409})
     }
 }
-class BadRequestException extends Error {
-  constructor(massge) {
-    super(massge, { cause: 400 });
+export class BadRequestException extends Error {
+  details;
+  constructor(massge, details = []) {
+    super(massge,details, { cause: 400 });
+    this.details = details;
   }
+  
 }
-class NotFoundException extends Error {
+export class NotFoundException extends Error {
   constructor(massge) {
     super(massge, { cause: 404 });
   }
 }
-class UnAuthorizedException extends Error {
+export  class UnAuthorizedException extends Error {
   constructor(massge) {
     super(massge, { cause: 401 });
   }
