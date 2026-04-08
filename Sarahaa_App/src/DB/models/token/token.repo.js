@@ -1,9 +1,9 @@
 import { DBRepository } from "../../db.repository.js";
 import { Token } from "./token.model.js";
-class tokenRepository extends DBRepository{
-    constructor() {
-        super(Token)
-    }
+class tokenRepository extends DBRepository {
+  constructor() {
+    super(Token);
+  }
 }
 
 export const tokenRepo = new tokenRepository();

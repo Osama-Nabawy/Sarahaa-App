@@ -1,7 +1,8 @@
 import { DBRepository } from "../../db.repository.js";
-class Comment extends DBRepository{
-    constructor(){
-        super(Comment)
-    }
-
+import { Comment } from "./comment.model.js";
+class CommentRepo extends DBRepository {
+  constructor() {
+    super(Comment);
+  }
 }
+export const commentRepo = new CommentRepo();

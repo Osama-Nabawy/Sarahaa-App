@@ -20,9 +20,17 @@ const schema = new Schema(
       lowercase: true,
       unique: true,
     },
+    provider: {
+      type: String,
+      enum: ["google", "system"],
+      default: "system",
+    },
     password: {
       type: String,
-      required: true,
+      required: function () {
+        if (this.provider == "google") return false;
+        return true;
+      },
       minlength: 8,
     },
     phonenumber: {
@@ -38,17 +46,17 @@ const schema = new Schema(
       default: SYS_Gender.male,
     },
     pp: {
-      type: String, required: false
+      type: String,
+      required: false,
     },
     isEmailVerify: {
       type: Boolean,
-      default : false
+      default: false,
     },
-    cerdintialUpdatedAt:{type:Date,default:Date.now()}
+    cerdintialUpdatedAt: { type: Date, default: Date.now() },
   },
   {
     timestamps: true,
   },
-
 );
-export const User = new model("User",schema)
+export const User = new model("User", schema);
