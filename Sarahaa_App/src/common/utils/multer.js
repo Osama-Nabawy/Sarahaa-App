@@ -1,8 +1,8 @@
 import multer, { diskStorage } from "multer";
-import fs from "node:fs"
+import fs from "node:fs";
 import { BadRequestException } from "./error.js";
 export const fileUpload = (
-  allawedTypes = ["image/png", "image/jpeg", "image/gif"],
+  allawedTypes = ["image/png", "image/jpeg", "image/gif", "image/jpg"],
 ) => {
   return multer({
     fileFilter: (req, file, cd) => {
@@ -13,10 +13,13 @@ export const fileUpload = (
     },
     storage: diskStorage({
       destination: (req, file, cd) => {
-        if (!fs.existsSync(`uploads/${req.user._id}`)) {
-          fs.mkdirSync(`uploads/${req.user._id}`, { recursive: true });
+        const folder = req.user
+          ? `uploads/${req.user._id}`
+          : `uploads/${req.params.r_id}`;
+        if (!fs.existsSync(folder)) {
+          fs.mkdirSync(folder, { recursive: true });
         }
-        cd(null, `uploads/${req.user._id}`);
+        cd(null, folder);
       },
       filename: (req, file, cd) => {
         cd(null, Date.now() + "__" + Math.random() + "__" + file.originalname);

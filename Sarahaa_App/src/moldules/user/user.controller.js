@@ -12,7 +12,6 @@ import {
   UnAuthorizedException,
   decryption,
   encryption,
-
   verifyRefreshToken,
   verifyAccsessToken,
 } from "../../common/index.js";
@@ -20,25 +19,27 @@ import { isAuthenticated } from "../../middelware/isAuthenticated.js";
 import { fileUpload } from "../../common/utils/multer.js";
 import { fileValidation } from "../../middelware/file.validation.js";
 
-const router = Router(); 
-router.post("/get-profile/", isAuthenticated , async (req, res, next) => {
+const router = Router();
+router.post("/get-profile/", isAuthenticated, async (req, res, next) => {
   const userExist = req.user;
-    if(userExist.phonenumber) userExist.phonenumber = decryption(userExist.phonenumber)
-    
+  if (userExist.phonenumber)
+    userExist.phonenumber = decryption(userExist.phonenumber);
+
   return res.status(200).json({
     message: "User Data",
     success: true,
     data: { userExist },
   });
-})
+});
 
 router.patch(
-  "/upload-profile-picture",isAuthenticated,
+  "/upload-profile-picture",
+  isAuthenticated,
   fileUpload().single("pp"),
   fileValidation,
-  async(req, res, next) => {
-    const updatedUserData = await uploadProfilePictuer(req.user, req.file.path)
-    console.log(updatedUserData.pp)
+  async (req, res, next) => {
+    const updatedUserData = await uploadProfilePictuer(req.user, req.file.path);
+    console.log(updatedUserData.pp);
     return res.json({
       msg: "updated data",
       success: true,
@@ -46,6 +47,5 @@ router.patch(
     });
   },
 );
-
 
 export const userRouter = router;
