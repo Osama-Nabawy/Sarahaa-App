@@ -37,9 +37,18 @@ const schema = new Schema(
       enum: Object.values(SYS_Gender),
       default: SYS_Gender.male,
     },
+    pp: {
+      type: String, required: false
+    },
+    isEmailVerify: {
+      type: Boolean,
+      default : false
+    },
+    cerdintialUpdatedAt:{type:Date,default:Date.now()}
   },
   {
     timestamps: true,
   },
+
 );
 export const User = new model("User",schema)

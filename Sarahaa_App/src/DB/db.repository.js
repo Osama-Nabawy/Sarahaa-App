@@ -7,8 +7,8 @@ export class DBRepository {
   async create(item) {
     return await this.nModel.create(item);
   }
-  async update(fillter, data, options = {}) {
-    return await this.nModel.findOneAndUpdate(fillter, data, (options = {}));
+  async update(fillter, data, options = { returnDocument: "after" }) {
+    return await this.nModel.findOneAndUpdate(fillter, { $set: data }, options);
   }
   async getOne(fillter, projection = {}, options = {}) {
     return await this.nModel.findOne(
