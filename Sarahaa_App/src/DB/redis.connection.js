@@ -1,6 +1,7 @@
 import { createClient } from "redis";
+import { Redis_Url } from "../common/index.js";
 export const redisClient = createClient({
-  url: "rediss://default:gQAAAAAAAWTKAAIncDFlZGRiMjIyMjI2MTk0ZTA2OGY4YzdhZmEwZmRmOTgzN3AxOTEzMzg@deep-polecat-91338.upstash.io:6379",
+  url: Redis_Url,
 });
 export const connectRedis = async () => {
   redisClient
@@ -9,6 +10,6 @@ export const connectRedis = async () => {
       console.log("connect redis DB");
     })
     .catch((error) => {
-      console.log("redis fail to connect");
+      console.log("redis fail to connect", error);
     });
 };
